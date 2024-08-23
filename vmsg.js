@@ -12,8 +12,7 @@ function inlineWorker() {
   // perfectly cached by the browser itself.
   function fetchAndInstantiate(url, imports) {
     if (!WebAssembly.instantiateStreaming) return fetchAndInstantiateFallback(url, imports);
-    const req = fetch(url, {credentials: "same-origin"});
-    return WebAssembly.instantiateStreaming(req, imports).catch(err => {
+    return WebAssembly.instantiateStreaming(fetch(url, {credentials: "same-origin"}), imports).catch(err => {
       // https://github.com/Kagami/vmsg/issues/11
       if (err.message && err.message.indexOf("Argument 0 must be provided and must be a Response") > 0) {
         return fetchAndInstantiateFallback(url, imports);

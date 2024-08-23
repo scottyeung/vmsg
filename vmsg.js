@@ -96,9 +96,6 @@ function inlineWorker() {
     case "init":
       const { wasmURL, shimURL } = msg.data;
       Promise.resolve().then(() => {
-        if (self.WebAssembly && !testSafariWebAssemblyBug()) {
-          delete self.WebAssembly;
-        }
         if (!self.WebAssembly) {
           importScripts(shimURL);
         }
